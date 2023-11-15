@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" monitorinterval="30">
+	<Properties>
+		<Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] - %5p %m - (%C:%L)%n</Property>
+		<Property name="LOG_DIR">C:/tmp/logs</Property>
+		<Property name="LOG_FILE_NAME">stockwatcher</Property>
+		
+		<Property name="LOG_DATA_PATTERN">%m %n</Property>
+		<Property name="LOG_DATA_FILE_NAME">optimizer2-data</Property>
+	</Properties>
+
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout>
+				<pattern>${LOG_PATTERN}</pattern>
+			</PatternLayout>
+		</Console>
+		<RollingFile name="DAILY_LOG" fileName="${LOG_DIR}/${LOG_FILE_NAME}.log"
+			filePattern="${LOG_DIR}/${LOG_FILE_NAME}-%d{yyyy-MM-dd}.log">
+			<DefaultRolloverStrategy max="285" />
+			<PatternLayout>
+				<pattern>${LOG_PATTERN}</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"	modulate="true" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="DATA_LOG" fileName="${LOG_DIR}/${LOG_DATA_FILE_NAME}.log"
+			filePattern="${LOG_DIR}/${LOG_DATA_FILE_NAME}-%d{yyyy-MM-dd}.log">
+			<DefaultRolloverStrategy max="285" />
+			<PatternLayout>
+				<pattern>${LOG_DATA_PATTERN}</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"	modulate="true" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="com.stock.services" additivity="true" level="info">
+			<AppenderRef ref="DAILY_LOG" level="info" />
+			<AppenderRef ref="Console" level="info" />
+		</Logger>
+		<Logger name="data-log" additivity="true" level="info">
+			<AppenderRef ref="DATA_LOG" />
+			</Logger>
+		<Root level="info" additivity="false">
+			<AppenderRef ref="Console" level="info" />
+		</Root>
+	</Loggers>
+</Configuration>
