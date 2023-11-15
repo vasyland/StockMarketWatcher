@@ -1,0 +1,16 @@
+
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
