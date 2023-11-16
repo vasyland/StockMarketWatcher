@@ -12,16 +12,22 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import com.stock.yahoo.AllSymbolsData;
-import com.stock.yahoo.SymbolCurrentState;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.stock.model.WatchSymbol;
+import com.stock.services.SymbolService;
+import com.stock.yahoo.AllSymbolsData;
+import com.stock.yahoo.SymbolCurrentState;
+
 @Component
 public class Test {
+	
+	private static final Logger log = LogManager.getLogger(Test.class);
 	
 	@Value("${symbol-list}")
 	private String symbolList;
@@ -29,14 +35,32 @@ public class Test {
 	@Value("${console-symbol}")
 	private String consoleSymbol;
 	
-	@Autowired
-	AllSymbolsData allSymbolsData;
+	/* Services */
+	private AllSymbolsData allSymbolsData;
+	private SymbolService symbolService;
+	
+	private List<WatchSymbol> wsl;
+	
+	public Test(AllSymbolsData allSymbolsData, SymbolService symbolService) {
+		super();
+		this.allSymbolsData = allSymbolsData;
+		this.symbolService = symbolService;
+		
+		wsl = symbolService.getWatchSymbolsData();
+	}
+
+
 
 	/* Every 5 seconds */
 	@Scheduled(cron = "${cron-string}")
 	public void everyFiveSeconds() {
 //		System.out.println("Periodic task: " + new Date());
 //		System.out.println("Dude => " + symbolList);
+		
+//		List<WatchSymbol> wsl = symbolService.getWatchSymbolsData();
+		this.wsl.stream().forEach(t -> {
+			System.out.println(t.getSymbol());
+		});		
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
