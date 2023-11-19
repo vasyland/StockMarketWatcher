@@ -32,7 +32,7 @@ public class WatchRunner {
 	
 	private static final Logger log = LogManager.getLogger(WatchRunner.class);
 
-	/* Services */
+	/* Used Services */
 	private AllSymbolsData allSymbolsData;
 	private SymbolService symbolService;
 
@@ -42,17 +42,15 @@ public class WatchRunner {
 		this.symbolService = symbolService;
 	}
 
-	/* Every 5 seconds */
 	@Scheduled(cron = "${cron-string}")
 	public void everyFiveSeconds() {
-
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		
 		try {
 			
-			String destFile = "C:\\tmp\\marketcap-data\\stock-2023-11-19.txt";
+			String destFile = "C:\\tmp\\marketcap-data\\stock-2023-11-19.txt"; //to be removed
 			try(
 				FileWriter fileWriter = new FileWriter(destFile, true);
 				PrintWriter pw = new PrintWriter(fileWriter);
@@ -60,7 +58,7 @@ public class WatchRunner {
 				
 				/* Here we need to get a list of symbols from the watch table and a list of all symbols entered by users */
 				List<String> symbolList = symbolService.getSymbols();
-				log.info("#1 Symbols to process: " + symbolList);
+				log.info("Symbols to process: " + symbolList);
 			
 				/* Getting Yahoo current prices for each symbol */
 				List<Future<SymbolCurrentState>> data = allSymbolsData.getCurrentData(symbolList);
@@ -98,7 +96,7 @@ public class WatchRunner {
 				
 			    /* Process Buy symbol list  */
 				processSymbolStatus(watchedSymbols, scs);
-				log.info("#2 Process Buy symbol list done");
+				log.info("Processing symbol list done");
 			
 			} catch (IOException e) {
 				log.error("#3 ERROR - " + e.getMessage());
@@ -127,7 +125,7 @@ public class WatchRunner {
 			
 			Optional<WatchSymbol> ws = wsl.stream().filter(t -> t.getSymbol().equalsIgnoreCase(c.getSymbol())).findFirst();
 			if(ws.isEmpty()) {
-				log.warn("#5 Data for symbol " + c.getSymbol() + " not found.");
+				log.warn("Data for the symbol " + c.getSymbol() + " not found.");
 				continue;
 			} else {
 			    
@@ -173,7 +171,7 @@ public class WatchRunner {
 			    		"  Allowed to Buy Yield: " + allowToBuyYield +
 			    		"  Action: " + action);
 			    
-			    /* Clean SYMBOL_STATUS table and populate with symbols that have Action = "Buy" only */
+			    /* Clean SYMBOL_STATUS table and populate with symbol data */
 		    	SymbolStatus symbolStatus = new SymbolStatus();
 		    	symbolStatus.setSymbol(c.getSymbol());
 			    symbolStatus.setCurrentPrice(c.getPrice());
