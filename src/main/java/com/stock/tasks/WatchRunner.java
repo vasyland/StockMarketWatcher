@@ -118,6 +118,8 @@ public class WatchRunner {
 		
 		int res;
 		int res2;
+		int res3;
+		
 		String action = "";
 		List<SymbolStatus> result = new ArrayList<>();
 		
@@ -135,6 +137,7 @@ public class WatchRunner {
 			    BigDecimal yieldRange = ws.get().getUpperYield().subtract(ws.get().getLowerYield());
 			    BigDecimal quoterOfUpperYield =  yieldRange.divide(BigDecimal.valueOf(4), 3, RoundingMode.HALF_EVEN);
 			    BigDecimal allowToBuyYield = ws.get().getUpperYield().subtract(quoterOfUpperYield);
+			    BigDecimal sellPoint = ws.get().getLowerYield().add(quoterOfUpperYield);
 			    
 			    /* 
 			     * Action = "Buy" if current yield is above Upper yield or in the top of 1/4th of the range
@@ -148,10 +151,23 @@ public class WatchRunner {
 			       action = "";
 			    }
 			    
+			    res3 = yield.compareTo(sellPoint);
+			    if (res3 == -1 && res2 != 0) {
+				   action = "Sell";
+			    }
+			    
+			    if(res == -1 && res3 == 1 && res2 != 0) {
+			    	action = "Hold";
+			    }
+			    
+			    if(res2 == 0) {
+			    	action = "N/A";
+			    }
+			    
 			    log.info("\n" + c.getSymbol() + "  Price:" + c.getPrice() + 
 			    		"  QDivAmt: " + ws.get().getQuoterlyDividendAmount() + 
 			    		"  Yield: " + yield + 
-			    		"  \n                     Upper Yield: " + ws.get().getUpperYield() +
+			    		"  \n         Upper Yield: " + ws.get().getUpperYield() +
 			    		"  Lower Yield: " + ws.get().getLowerYield() +
 			    		"  Quoter of Yield Range: " + quoterOfUpperYield +
 			    		"  Allowed to Buy Yield: " + allowToBuyYield +
