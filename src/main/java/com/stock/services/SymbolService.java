@@ -6,5 +6,6 @@ import com.stock.model.WatchSymbol;
 
 public interface SymbolService {
 
+	List<String> getSymbols();
 	List<WatchSymbol> getWatchSymbolsData();
 }

@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
  * https://stackoverflow.com/questions/9501237/read-input-stream-twice
  */
 public class YahooCurrentData {
-	
-
 
 	public static void main(String[] args) throws Exception {
 		YahooCurrentData dude = new YahooCurrentData();

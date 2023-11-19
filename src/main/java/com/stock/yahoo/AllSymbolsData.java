@@ -22,11 +22,11 @@ public class AllSymbolsData {
 
 	private static ArrayBlockingQueue<String> symbolQueue = null;
 	
-	public List<Future<SymbolCurrentState>>  getCurrentData(String symbols) throws InterruptedException, ExecutionException {
+	public List<Future<SymbolCurrentState>>  getCurrentData(List<String> workList) throws InterruptedException, ExecutionException {
 
 		AllSymbolsData tc = new AllSymbolsData();
 
-		List<String> workList = YahooCurrentData.getSymbolList(symbols);
+//		List<String> workList = YahooCurrentData.getSymbolList(symbols);
 //		System.out.println("Get Tasks: List size is: " + workList.size());
 		
 		symbolQueue = new ArrayBlockingQueue<>(workList.size());
