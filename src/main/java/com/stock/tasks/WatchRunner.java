@@ -179,6 +179,8 @@ public class WatchRunner {
 			    symbolStatus.setRecomendedAction(action);
 
 			    if(res2 != 0) {
+			    	
+			    	symbolStatus.setQuoterlyDividendAmount(ws.get().getQuoterlyDividendAmount());
 			    	symbolStatus.setUpperYield(ws.get().getUpperYield());
 			    	symbolStatus.setLowerYield(ws.get().getLowerYield());
 			    	symbolStatus.setAllowedToBuyYield(allowedToBuyYield);

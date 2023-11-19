@@ -20,6 +20,8 @@ public class SymbolStatus implements Serializable {
 	private String symbol;
 	@Column(name="CURRENT_PRICE")
 	private BigDecimal currentPrice;
+	@Column(name = "quoterly_dividend_amount")
+	private BigDecimal quoterlyDividendAmount;
 	@Column(name="CURRENT_YIELD")
 	private BigDecimal currentYield;
 	@Column(name="UPPER_YIELD")
@@ -37,21 +39,6 @@ public class SymbolStatus implements Serializable {
 	
 	public SymbolStatus() {
 		super();
-	}
-
-	public SymbolStatus(String symbol, BigDecimal currentPrice, BigDecimal currentYield, BigDecimal upperYield,
-			BigDecimal lowerYield, BigDecimal allowedToBuyYield, BigDecimal sellPointYield, String recomendedAction,
-			LocalDateTime updatedOn) {
-		super();
-		this.symbol = symbol;
-		this.currentPrice = currentPrice;
-		this.currentYield = currentYield;
-		this.upperYield = upperYield;
-		this.lowerYield = lowerYield;
-		this.allowedToBuyYield = allowedToBuyYield;
-		this.sellPointYield = sellPointYield;
-		this.recomendedAction = recomendedAction;
-		this.updatedOn = updatedOn;
 	}
 
 	public String getSymbol() {
@@ -126,16 +113,19 @@ public class SymbolStatus implements Serializable {
 		this.updatedOn = updatedOn;
 	}
 
+	public BigDecimal getQuoterlyDividendAmount() {
+		return quoterlyDividendAmount;
+	}
+
+	public void setQuoterlyDividendAmount(BigDecimal quoterlyDividendAmount) {
+		this.quoterlyDividendAmount = quoterlyDividendAmount;
+	}
+
 	@Override
 	public String toString() {
-		return "SymbolStatus [symbol=" + symbol + 
-				", currentPrice=" + currentPrice + 
-				", currentYield=" + currentYield + 
-				", upperYield=" + upperYield + 
-				", lowerYield=" + lowerYield + 
-				", allowedToBuyYield=" + allowedToBuyYield + 
-				", sellPointYield=" + sellPointYield + 
-				", recomendedAction=" + recomendedAction
-				+ ", updatedOn=" + updatedOn + "]";
+		return "SymbolStatus [symbol=" + symbol + ", currentPrice=" + currentPrice + ", quoterlyDividendAmount="
+				+ quoterlyDividendAmount + ", currentYield=" + currentYield + ", upperYield=" + upperYield
+				+ ", lowerYield=" + lowerYield + ", allowedToBuyYield=" + allowedToBuyYield + ", sellPointYield="
+				+ sellPointYield + ", recomendedAction=" + recomendedAction + ", updatedOn=" + updatedOn + "]";
 	}
 }

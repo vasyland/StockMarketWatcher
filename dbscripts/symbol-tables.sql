@@ -3,9 +3,9 @@
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `horse2`.`watch_symbol` (
   `symbol` VARCHAR(10) NOT NULL COMMENT 'Stock symbol TSX with .TO',
-  `quoterly_dividend_amount` DECIMAL(10,4) NULL COMMENT 'Majority ov comapnies pay on quaterly basis',
+  `quoterly_dividend_amount` DECIMAL(10,4) NULL COMMENT 'Majority of comapnies pay dividends on a quaterly basis',
   `upper_yield` DECIMAL(6,4) NULL COMMENT 'Upper yeild where price is at lowest point',
-  `lower_yield` DECIMAL(6,4) NULL COMMENT 'Lowe yield when price is at highest point',
+  `lower_yield` DECIMAL(6,4) NULL COMMENT 'Lower yield when price is at highest point',
   `updated_on` DATETIME(6) NULL COMMENT 'Date when record was created or updated',
   PRIMARY KEY (`symbol`))
 ENGINE = InnoDB;
@@ -16,6 +16,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `horse2`.`symbol_status` (
   `symbol` VARCHAR(10) NOT NULL COMMENT 'Stock ticker. TSX with .TO',
   `current_price` DECIMAL(10,4) NULL COMMENT 'Cuurent price taken from yahoo finance',
+  `quoterly_dividend_amount` DECIMAL(10,4) NULL COMMENT 'Majority of comapnies pay dividends on a quaterly basis',
   `current_yield` DECIMAL(6,4) NULL COMMENT 'Current yeild calculated from (quaterly_dividend_amount * 4) /current_price * 100',
   `upper_yield` DECIMAL(6,4) NULL DEFAULT NULL COMMENT 'Upper yield' ,
   `lower_yield` DECIMAL(6,4) NULL DEFAULT NULL COMMENT 'Lower_yield' ,
