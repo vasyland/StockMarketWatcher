@@ -46,7 +46,7 @@ public class SymbolServiceImpl implements SymbolService {
 	public List<WatchSymbol> getWatchSymbolsData() {
 		Iterable<WatchSymbol> p = watchSymbolRepository.findAll();
 		List<WatchSymbol> ws = Streamable.of(p).toList();
-		log.info("Number of selected watch symbols is: ", ws.size());
+		log.info("Number of selected watch symbols is: " + ws.size());
 		return ws;
 	}
 

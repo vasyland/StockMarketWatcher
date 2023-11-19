@@ -43,8 +43,9 @@
 		</Logger>
 		<Logger name="data-log" additivity="true" level="info">
 			<AppenderRef ref="DATA_LOG" />
-			</Logger>
+		</Logger>
 		<Root level="info" additivity="false">
+			<AppenderRef ref="DAILY_LOG" level="info" />
 			<AppenderRef ref="Console" level="info" />
 		</Root>
 	</Loggers>

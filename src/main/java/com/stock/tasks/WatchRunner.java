@@ -28,41 +28,31 @@ import com.stock.yahoo.AllSymbolsData;
 import com.stock.yahoo.SymbolCurrentState;
 
 @Component
-public class Test {
+public class WatchRunner {
 	
-	private static final Logger log = LogManager.getLogger(Test.class);
-	
-//	@Value("${symbol-list}")
-//	private String symbolList;
-	
-//	@Value("${console-symbol}")
-//	private String consoleSymbol;
-	
+	private static final Logger log = LogManager.getLogger(WatchRunner.class);
+
 	/* Services */
 	private AllSymbolsData allSymbolsData;
 	private SymbolService symbolService;
-	
 
-	public Test(AllSymbolsData allSymbolsData, SymbolService symbolService) {
+	public WatchRunner(AllSymbolsData allSymbolsData, SymbolService symbolService) {
 		super();
 		this.allSymbolsData = allSymbolsData;
 		this.symbolService = symbolService;
 	}
 
-
-
 	/* Every 5 seconds */
 	@Scheduled(cron = "${cron-string}")
 	public void everyFiveSeconds() {
-//		System.out.println("Periodic task: " + new Date());
-//		System.out.println("Dude => " + symbolList);
+
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		
 		try {
 			
-			String destFile = "C:\\tmp\\marketcap-data\\stock-2023-11-18.txt";
+			String destFile = "C:\\tmp\\marketcap-data\\stock-2023-11-19.txt";
 			try(
 				FileWriter fileWriter = new FileWriter(destFile, true);
 				PrintWriter pw = new PrintWriter(fileWriter);
@@ -70,8 +60,8 @@ public class Test {
 				
 				/* Here we need to get a list of symbols from the watch table and a list of all symbols entered by users */
 				List<String> symbolList = symbolService.getSymbols();
-				System.out.println("Symbols to do: " + symbolList);
-				
+				log.info("#1 Symbols to process: " + symbolList);
+			
 				/* Getting Yahoo current prices for each symbol */
 				List<Future<SymbolCurrentState>> data = allSymbolsData.getCurrentData(symbolList);
 	
@@ -82,6 +72,7 @@ public class Test {
 				
 				/* Calculate current yield for each symbol */
 				for (int y = 0; y < data.size(); y++) {
+					
 					Future<SymbolCurrentState> future = data.get(y);
 					SymbolCurrentState p = future.get();
 					BigDecimal outstandingShares = p.getMarketCap().divide(p.getPrice(), MathContext.DECIMAL32);
@@ -106,15 +97,14 @@ public class Test {
 				}
 				
 			    /* Process Buy symbol list  */
-				
 				processSymbolStatus(watchedSymbols, scs);
+				log.info("#2 Process Buy symbol list done");
 			
 			} catch (IOException e) {
-				e.printStackTrace();
+				log.error("#3 ERROR - " + e.getMessage());
 			}
 		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("#4 ERROR - " + e.getMessage());
 		}
 	}
 	
@@ -135,7 +125,7 @@ public class Test {
 			
 			Optional<WatchSymbol> ws = wsl.stream().filter(t -> t.getSymbol().equalsIgnoreCase(c.getSymbol())).findFirst();
 			if(ws.isEmpty()) {
-				System.out.println("Data for symbol " + c.getSymbol() + " not found.");
+				log.warn("#5 Data for symbol " + c.getSymbol() + " not found.");
 				continue;
 			} else {
 			    
@@ -158,14 +148,14 @@ public class Test {
 			       action = "";
 			    }
 			    
-			    System.out.println("\n" + c.getSymbol() + "-> Price:" + c.getPrice() + 
+			    log.info("\n" + c.getSymbol() + "  Price:" + c.getPrice() + 
 			    		"  QDivAmt: " + ws.get().getQuoterlyDividendAmount() + 
 			    		"  Yield: " + yield + 
-			    		"  \n Upper Yield: " + ws.get().getUpperYield() +
+			    		"  \n                     Upper Yield: " + ws.get().getUpperYield() +
 			    		"  Lower Yield: " + ws.get().getLowerYield() +
-			    		" Quoter of Yield Range: " + quoterOfUpperYield +
+			    		"  Quoter of Yield Range: " + quoterOfUpperYield +
 			    		"  Allowed to Buy Yield: " + allowToBuyYield +
-			    		" Action: " + action);
+			    		"  Action: " + action);
 			    
 			    /* Clean SYMBOL_STATUS table and populate with symbols that have Action = "Buy" only */
 		    	SymbolStatus symbolStatus = new SymbolStatus();
@@ -185,8 +175,11 @@ public class Test {
 		
         /* Clean table from the records  */
 		symbolService.cleanSymbolStatus();
+		log.info("Cleaning table done.");
+		
 		/* Saving calculations into table  */
 		Iterable<SymbolStatus> j = symbolService.saveSymbolStatuses(result);
+		log.info("SYMBOL_STATUS table populated with new data.");
 	}
 	
 }
