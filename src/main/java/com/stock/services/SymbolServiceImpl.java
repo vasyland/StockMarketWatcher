@@ -7,8 +7,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
+import com.stock.model.SymbolStatus;
 import com.stock.model.WatchSymbol;
 import com.stock.repositories.SymbolRepository;
+import com.stock.repositories.SymbolStatusRepository;
 import com.stock.repositories.WatchSymbolRepository;
 
 @Service
@@ -18,11 +20,14 @@ public class SymbolServiceImpl implements SymbolService {
 
 	private SymbolRepository symbolRepository;
 	private WatchSymbolRepository watchSymbolRepository;
+	private SymbolStatusRepository symbolStatusRepository;
 
-	public SymbolServiceImpl(SymbolRepository symbolRepository, WatchSymbolRepository watchSymbolRepository) {
+	public SymbolServiceImpl(SymbolRepository symbolRepository, WatchSymbolRepository watchSymbolRepository,
+			SymbolStatusRepository symbolStatusRepository) {
 		super();
 		this.symbolRepository = symbolRepository;
 		this.watchSymbolRepository = watchSymbolRepository;
+		this.symbolStatusRepository = symbolStatusRepository;
 	}
 
 	/* 
@@ -45,6 +50,17 @@ public class SymbolServiceImpl implements SymbolService {
 		return ws;
 	}
 
-	
+	/**
+	 * Delete all records from SYMBOL_STATUS table
+	 */
+	@Override
+	public void cleanSymbolStatus() {
+		symbolStatusRepository.deleteAll();
+	}
+
+	@Override
+	public Iterable<SymbolStatus> saveSymbolStatuses(List<SymbolStatus> s) {
+		return symbolStatusRepository.saveAll(s);
+	}
 	
 }

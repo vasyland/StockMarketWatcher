@@ -3,10 +3,10 @@
 	<Properties>
 		<Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] - %5p %m - (%C:%L)%n</Property>
 		<Property name="LOG_DIR">C:/tmp/logs</Property>
-		<Property name="LOG_FILE_NAME">stockwatcher</Property>
+		<Property name="LOG_FILE_NAME">stock-market-watcher</Property>
 		
 		<Property name="LOG_DATA_PATTERN">%m %n</Property>
-		<Property name="LOG_DATA_FILE_NAME">optimizer2-data</Property>
+		<Property name="LOG_DATA_FILE_NAME">stock-market-watcher-data</Property>
 	</Properties>
 
 	<Appenders>

@@ -10,8 +10,6 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.springframework.beans.factory.annotation.Value;
-
 /**
  * <b>Get the Html source from a https url </b>
  * https://stackoverflow.com/questions/9501237/read-input-stream-twice

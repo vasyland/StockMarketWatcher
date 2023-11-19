@@ -8,6 +8,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -105,18 +106,16 @@ public class Test {
 				}
 				
 			    /* Process Buy symbol list  */
+				
 				processSymbolStatus(watchedSymbols, scs);
 			
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
-
 		} catch (InterruptedException | ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 	
 	
@@ -130,6 +129,7 @@ public class Test {
 		int res;
 		int res2;
 		String action = "";
+		List<SymbolStatus> result = new ArrayList<>();
 		
 		for(SymbolCurrentState c: scs) {
 			
@@ -175,9 +175,18 @@ public class Test {
 			    symbolStatus.setStatus("Active");
 			    symbolStatus.setRecomendedAction(action);
 			    
+			    LocalDateTime ldt = LocalDateTime.now();
+			    symbolStatus.setUpdatedOn(ldt);
+			    
+			    result.add(symbolStatus);
+			    
 			}
 		}
+		
+        /* Clean table from the records  */
+		symbolService.cleanSymbolStatus();
+		/* Saving calculations into table  */
+		Iterable<SymbolStatus> j = symbolService.saveSymbolStatuses(result);
 	}
-	
 	
 }
