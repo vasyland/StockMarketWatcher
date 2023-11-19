@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -24,10 +22,16 @@ public class SymbolStatus implements Serializable {
 	private BigDecimal currentPrice;
 	@Column(name="CURRENT_YIELD")
 	private BigDecimal currentYield;
+	@Column(name="UPPER_YIELD")
+	private BigDecimal upperYield;
+	@Column(name="LOWER_YIELD")
+	private BigDecimal lowerYield;
+	@Column(name="ALLOWEDTOBUY_YIELD")
+	private BigDecimal allowedToBuyYield;
+	@Column(name="SELL_POINT_YIELD")
+	private BigDecimal sellPointYield;
 	@Column(name="RECOMENDED_ACTION")
 	private String recomendedAction;
-	@Column(name="STATUS")
-	private String status;
 	@Column(name = "UPDATED_ON")
 	private LocalDateTime updatedOn;
 	
@@ -35,14 +39,18 @@ public class SymbolStatus implements Serializable {
 		super();
 	}
 
-	public SymbolStatus(String symbol, BigDecimal currentPrice, BigDecimal currentYield, String recomendedAction,
-			String status, LocalDateTime updatedOn) {
+	public SymbolStatus(String symbol, BigDecimal currentPrice, BigDecimal currentYield, BigDecimal upperYield,
+			BigDecimal lowerYield, BigDecimal allowedToBuyYield, BigDecimal sellPointYield, String recomendedAction,
+			LocalDateTime updatedOn) {
 		super();
 		this.symbol = symbol;
 		this.currentPrice = currentPrice;
 		this.currentYield = currentYield;
+		this.upperYield = upperYield;
+		this.lowerYield = lowerYield;
+		this.allowedToBuyYield = allowedToBuyYield;
+		this.sellPointYield = sellPointYield;
 		this.recomendedAction = recomendedAction;
-		this.status = status;
 		this.updatedOn = updatedOn;
 	}
 
@@ -70,20 +78,44 @@ public class SymbolStatus implements Serializable {
 		this.currentYield = currentYield;
 	}
 
+	public BigDecimal getUpperYield() {
+		return upperYield;
+	}
+
+	public void setUpperYield(BigDecimal upperYield) {
+		this.upperYield = upperYield;
+	}
+
+	public BigDecimal getLowerYield() {
+		return lowerYield;
+	}
+
+	public void setLowerYield(BigDecimal lowerYield) {
+		this.lowerYield = lowerYield;
+	}
+
+	public BigDecimal getAllowedToBuyYield() {
+		return allowedToBuyYield;
+	}
+
+	public void setAllowedToBuyYield(BigDecimal allowedToBuyYield) {
+		this.allowedToBuyYield = allowedToBuyYield;
+	}
+
+	public BigDecimal getSellPointYield() {
+		return sellPointYield;
+	}
+
+	public void setSellPointYield(BigDecimal sellPointYield) {
+		this.sellPointYield = sellPointYield;
+	}
+
 	public String getRecomendedAction() {
 		return recomendedAction;
 	}
 
 	public void setRecomendedAction(String recomendedAction) {
 		this.recomendedAction = recomendedAction;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	public LocalDateTime getUpdatedOn() {
@@ -97,12 +129,13 @@ public class SymbolStatus implements Serializable {
 	@Override
 	public String toString() {
 		return "SymbolStatus [symbol=" + symbol + 
-				",\n currentPrice=" + currentPrice + 
-				",\n currentYield=" + currentYield + 
-				",\n recomendedAction=" + recomendedAction + 
-				",\n status=" + status + 
-				",\n updatedOn=" + updatedOn + "]";
+				", currentPrice=" + currentPrice + 
+				", currentYield=" + currentYield + 
+				", upperYield=" + upperYield + 
+				", lowerYield=" + lowerYield + 
+				", allowedToBuyYield=" + allowedToBuyYield + 
+				", sellPointYield=" + sellPointYield + 
+				", recomendedAction=" + recomendedAction
+				+ ", updatedOn=" + updatedOn + "]";
 	}
-	
-	
 }

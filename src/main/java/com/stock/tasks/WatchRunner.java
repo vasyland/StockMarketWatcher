@@ -134,14 +134,14 @@ public class WatchRunner {
 			            .divide(c.getPrice(), RoundingMode.HALF_EVEN);
 			    BigDecimal yieldRange = ws.get().getUpperYield().subtract(ws.get().getLowerYield());
 			    BigDecimal quoterOfUpperYield =  yieldRange.divide(BigDecimal.valueOf(4), 3, RoundingMode.HALF_EVEN);
-			    BigDecimal allowToBuyYield = ws.get().getUpperYield().subtract(quoterOfUpperYield);
-			    BigDecimal sellPoint = ws.get().getLowerYield().add(quoterOfUpperYield);
+			    BigDecimal allowedToBuyYield = ws.get().getUpperYield().subtract(quoterOfUpperYield);
+			    BigDecimal sellPointYield = ws.get().getLowerYield().add(quoterOfUpperYield);
 			    
 			    /* 
 			     * Action = "Buy" if current yield is above Upper yield or in the top of 1/4th of the range
 			     * between Upper and Lower yields 
 			     */
-			    res = yield.compareTo(allowToBuyYield);
+			    res = yield.compareTo(allowedToBuyYield);
 			    res2 = ws.get().getUpperYield().compareTo(BigDecimal.valueOf(0.0));
 			    if (res == 0 || res == 1 && res2 != 0) {
 			       action = "Buy";
@@ -149,7 +149,7 @@ public class WatchRunner {
 			       action = "";
 			    }
 			    
-			    res3 = yield.compareTo(sellPoint);
+			    res3 = yield.compareTo(sellPointYield);
 			    if (res3 == -1 && res2 != 0) {
 				   action = "Sell";
 			    }
@@ -168,16 +168,22 @@ public class WatchRunner {
 			    		"  \n         Upper Yield: " + ws.get().getUpperYield() +
 			    		"  Lower Yield: " + ws.get().getLowerYield() +
 			    		"  Quoter of Yield Range: " + quoterOfUpperYield +
-			    		"  Allowed to Buy Yield: " + allowToBuyYield +
+			    		"  Allowed to Buy Yield: " + allowedToBuyYield +
 			    		"  Action: " + action);
 			    
-			    /* Clean SYMBOL_STATUS table and populate with symbol data */
+			    /* Symbol Status data */
 		    	SymbolStatus symbolStatus = new SymbolStatus();
 		    	symbolStatus.setSymbol(c.getSymbol());
 			    symbolStatus.setCurrentPrice(c.getPrice());
 			    symbolStatus.setCurrentYield(yield);
-			    symbolStatus.setStatus("Active");
 			    symbolStatus.setRecomendedAction(action);
+
+			    if(res2 != 0) {
+			    	symbolStatus.setUpperYield(ws.get().getUpperYield());
+			    	symbolStatus.setLowerYield(ws.get().getLowerYield());
+			    	symbolStatus.setAllowedToBuyYield(allowedToBuyYield);
+			    	symbolStatus.setSellPointYield(sellPointYield);
+			    }
 			    
 			    LocalDateTime ldt = LocalDateTime.now();
 			    symbolStatus.setUpdatedOn(ldt);
