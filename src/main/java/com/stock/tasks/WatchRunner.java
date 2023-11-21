@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -71,17 +72,27 @@ public class WatchRunner {
 				/* Calculate current yield for each symbol */
 				for (int y = 0; y < data.size(); y++) {
 					
-					Future<SymbolCurrentState> future = data.get(y);
+					Future<SymbolCurrentState> future = null;
+					future = data.get(y);
+					
+					boolean isCompleted = future.isDone() && !future.isCancelled();
+					
+					if( !isCompleted ) {
+						log.error("Future failed to complete.");
+						continue;
+					}
+					
 					SymbolCurrentState p = future.get();
+					
+					if( p == null || p.getPrice() == null) {
+						log.error("Failed to get data from Yahoo.");
+						continue;
+					}
+										
 					BigDecimal outstandingShares = p.getMarketCap().divide(p.getPrice(), MathContext.DECIMAL32);
 					
 					scs.add(p);
 					
-//					if(p.getSymbol().equalsIgnoreCase(consoleSymbol)) 
-//						System.out.printf("%-8S | %6.2f | %5.2f | %6.2f | %12.6f | %n", p.getSymbol(), p.getPrice(),
-//								p.getChangedPercent(), p.getMarketCap(), outstandingShares);
-					
-					//pw.print("Date,Symbol,Price,ChangedProcent,MarketCap,OutstandingShares");
 					date = new Date();
 					String line = String.format("%-19S, %-8S,%6.2f,%5.2f,%6.2f,%8.6f%n",  
 							dateFormat.format(new Date()), 
@@ -176,7 +187,7 @@ public class WatchRunner {
 		    	symbolStatus.setSymbol(c.getSymbol());
 			    symbolStatus.setCurrentPrice(c.getPrice());
 			    symbolStatus.setCurrentYield(yield);
-			    symbolStatus.setRecomendedAction(action);
+			    symbolStatus.setRecommendedAction(action);
 
 			    if(res2 != 0) {
 			    	

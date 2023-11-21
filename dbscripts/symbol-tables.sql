@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `horse2`.`symbol_status` (
   `lower_yield` DECIMAL(6,4) NULL DEFAULT NULL COMMENT 'Lower_yield' ,
   `allowedtobuy_yield` DECIMAL(6,4) NULL DEFAULT NULL ,
   `sell_point_yield` DECIMAL(6,4) NULL DEFAULT NULL COMMENT 'Status of the findings: OUTDATED, NOT AVAILABLE, ERROR, ACTIVE',
-  `recomended_action` VARCHAR(15) NULL COMMENT 'Possible Values: BUY, SELL, HOLD',
+  `recommended_action` VARCHAR(15) NULL COMMENT 'Possible Values: BUY, SELL, HOLD',
   `updated_on` DATETIME(6) NULL,
   PRIMARY KEY (`symbol`))
 ENGINE = InnoDB;

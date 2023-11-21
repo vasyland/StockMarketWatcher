@@ -87,7 +87,7 @@ public class CalculationDraft {
 			    	symbolStatus.setSymbol(c.getSymbol());
 				    symbolStatus.setCurrentPrice(c.getPrice());
 				    symbolStatus.setCurrentYield(yield);
-				    symbolStatus.setRecomendedAction(action);
+				    symbolStatus.setRecommendedAction(action);
 
 			}
 		}

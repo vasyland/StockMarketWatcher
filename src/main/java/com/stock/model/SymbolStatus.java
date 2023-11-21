@@ -32,8 +32,8 @@ public class SymbolStatus implements Serializable {
 	private BigDecimal allowedToBuyYield;
 	@Column(name="SELL_POINT_YIELD")
 	private BigDecimal sellPointYield;
-	@Column(name="RECOMENDED_ACTION")
-	private String recomendedAction;
+	@Column(name="RECOMMENDED_ACTION")
+	private String recommendedAction;
 	@Column(name = "UPDATED_ON")
 	private LocalDateTime updatedOn;
 	
@@ -97,12 +97,12 @@ public class SymbolStatus implements Serializable {
 		this.sellPointYield = sellPointYield;
 	}
 
-	public String getRecomendedAction() {
-		return recomendedAction;
+	public String getRecommendedAction() {
+		return recommendedAction;
 	}
 
-	public void setRecomendedAction(String recomendedAction) {
-		this.recomendedAction = recomendedAction;
+	public void setRecommendedAction(String recommendedAction) {
+		this.recommendedAction = recommendedAction;
 	}
 
 	public LocalDateTime getUpdatedOn() {
@@ -126,6 +126,6 @@ public class SymbolStatus implements Serializable {
 		return "SymbolStatus [symbol=" + symbol + ", currentPrice=" + currentPrice + ", quoterlyDividendAmount="
 				+ quoterlyDividendAmount + ", currentYield=" + currentYield + ", upperYield=" + upperYield
 				+ ", lowerYield=" + lowerYield + ", allowedToBuyYield=" + allowedToBuyYield + ", sellPointYield="
-				+ sellPointYield + ", recomendedAction=" + recomendedAction + ", updatedOn=" + updatedOn + "]";
+				+ sellPointYield + ", recommendedAction=" + recommendedAction + ", updatedOn=" + updatedOn + "]";
 	}
 }
