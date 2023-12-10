@@ -34,3 +34,11 @@ mysql> describe watch_symbol;
 
 # Install Kotlin pluging for eclipse
 https://in-kotlin.com/ide/eclipse/
+
+
+# Build a deployment package from Eclipse
+```
+1. run Gradle Tasks -> StackMarketWatcher -> BootJar
+2. Take a ready to go package here: C:\tmp\StockMarketWatcher\build\libs\StockMarketWatcher-0.0.1.jar
+```
+

@@ -145,14 +145,17 @@ public class WatchRunner {
 			            .divide(c.getPrice(), RoundingMode.HALF_EVEN);
 			    BigDecimal yieldRange = ws.get().getUpperYield().subtract(ws.get().getLowerYield());
 			    BigDecimal quoterOfUpperYield =  yieldRange.divide(BigDecimal.valueOf(4), 3, RoundingMode.HALF_EVEN);
-			    BigDecimal allowedToBuyYield = ws.get().getUpperYield().subtract(quoterOfUpperYield);
+			    BigDecimal allowedBuyYield = ws.get().getUpperYield().subtract(quoterOfUpperYield);
 			    BigDecimal sellPointYield = ws.get().getLowerYield().add(quoterOfUpperYield);
+			    
+			    BigDecimal bestBuyPrice = ws.get().getQuoterlyDividendAmount().multiply(BigDecimal.valueOf(400)).divide(ws.get().getUpperYield(), RoundingMode.HALF_EVEN);
+			    BigDecimal allowedBuyPrice = ws.get().getQuoterlyDividendAmount().multiply(BigDecimal.valueOf(400)).divide(allowedBuyYield, RoundingMode.HALF_EVEN);
 			    
 			    /* 
 			     * Action = "Buy" if current yield is above Upper yield or in the top of 1/4th of the range
 			     * between Upper and Lower yields 
 			     */
-			    res = yield.compareTo(allowedToBuyYield);
+			    res = yield.compareTo(allowedBuyYield);
 			    res2 = ws.get().getUpperYield().compareTo(BigDecimal.valueOf(0.0));
 			    if (res == 0 || res == 1 && res2 != 0) {
 			       action = "Buy";
@@ -179,7 +182,9 @@ public class WatchRunner {
 			    		"  \n         Upper Yield: " + ws.get().getUpperYield() +
 			    		"  Lower Yield: " + ws.get().getLowerYield() +
 			    		"  Quoter of Yield Range: " + quoterOfUpperYield +
-			    		"  Allowed to Buy Yield: " + allowedToBuyYield +
+			    		"  Allowed to Buy Yield: " + allowedBuyYield +
+			    		"  Allowed to Buy Price: " + allowedBuyPrice +
+			    		"  Best Buy Price: " + allowedBuyPrice +
 			    		"  Action: " + action);
 			    
 			    /* Symbol Status data */
@@ -187,6 +192,8 @@ public class WatchRunner {
 		    	symbolStatus.setSymbol(c.getSymbol());
 			    symbolStatus.setCurrentPrice(c.getPrice());
 			    symbolStatus.setCurrentYield(yield);
+			    symbolStatus.setAllowedBuyPrice(allowedBuyPrice);
+			    symbolStatus.setBestBuyPrice(bestBuyPrice);
 			    symbolStatus.setRecommendedAction(action);
 
 			    if(res2 != 0) {
@@ -194,7 +201,7 @@ public class WatchRunner {
 			    	symbolStatus.setQuoterlyDividendAmount(ws.get().getQuoterlyDividendAmount());
 			    	symbolStatus.setUpperYield(ws.get().getUpperYield());
 			    	symbolStatus.setLowerYield(ws.get().getLowerYield());
-			    	symbolStatus.setAllowedToBuyYield(allowedToBuyYield);
+			    	symbolStatus.setAllowedBuyYield(allowedBuyYield);
 			    	symbolStatus.setSellPointYield(sellPointYield);
 			    }
 			    

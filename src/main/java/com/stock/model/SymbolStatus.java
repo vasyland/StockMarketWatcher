@@ -28,10 +28,18 @@ public class SymbolStatus implements Serializable {
 	private BigDecimal upperYield;
 	@Column(name="LOWER_YIELD")
 	private BigDecimal lowerYield;
-	@Column(name="ALLOWEDTOBUY_YIELD")
-	private BigDecimal allowedToBuyYield;
+	
+	@Column(name="ALLOWED_BUY_PRICE")
+	private BigDecimal allowedBuyPrice;
+	@Column(name="BEST_BUY_PRICE")
+	private BigDecimal bestBuyPrice;
+	
+	@Column(name="ALLOWED_BUY_YIELD")
+	private BigDecimal allowedBuyYield;
 	@Column(name="SELL_POINT_YIELD")
 	private BigDecimal sellPointYield;
+	
+	
 	@Column(name="RECOMMENDED_ACTION")
 	private String recommendedAction;
 	@Column(name = "UPDATED_ON")
@@ -81,12 +89,12 @@ public class SymbolStatus implements Serializable {
 		this.lowerYield = lowerYield;
 	}
 
-	public BigDecimal getAllowedToBuyYield() {
-		return allowedToBuyYield;
+	public BigDecimal getAllowedBuyYield() {
+		return allowedBuyYield;
 	}
 
-	public void setAllowedToBuyYield(BigDecimal allowedToBuyYield) {
-		this.allowedToBuyYield = allowedToBuyYield;
+	public void setAllowedBuyYield(BigDecimal allowedBuyYield) {
+		this.allowedBuyYield = allowedBuyYield;
 	}
 
 	public BigDecimal getSellPointYield() {
@@ -121,11 +129,30 @@ public class SymbolStatus implements Serializable {
 		this.quoterlyDividendAmount = quoterlyDividendAmount;
 	}
 
+	public BigDecimal getAllowedBuyPrice() {
+		return allowedBuyPrice;
+	}
+
+	public void setAllowedBuyPrice(BigDecimal allowedBuyPrice) {
+		this.allowedBuyPrice = allowedBuyPrice;
+	}
+
+	public BigDecimal getBestBuyPrice() {
+		return bestBuyPrice;
+	}
+
+	public void setBestBuyPrice(BigDecimal bestBuyPrice) {
+		this.bestBuyPrice = bestBuyPrice;
+	}
+
 	@Override
 	public String toString() {
 		return "SymbolStatus [symbol=" + symbol + ", currentPrice=" + currentPrice + ", quoterlyDividendAmount="
 				+ quoterlyDividendAmount + ", currentYield=" + currentYield + ", upperYield=" + upperYield
-				+ ", lowerYield=" + lowerYield + ", allowedToBuyYield=" + allowedToBuyYield + ", sellPointYield="
-				+ sellPointYield + ", recommendedAction=" + recommendedAction + ", updatedOn=" + updatedOn + "]";
+				+ ", lowerYield=" + lowerYield + ", allowedBuyPrice=" + allowedBuyPrice + ", bestBuyPrice="
+				+ bestBuyPrice + ", allowedBuyYield=" + allowedBuyYield + ", sellPointYield=" + sellPointYield
+				+ ", recommendedAction=" + recommendedAction + ", updatedOn=" + updatedOn + "]";
 	}
+
+	
 }
