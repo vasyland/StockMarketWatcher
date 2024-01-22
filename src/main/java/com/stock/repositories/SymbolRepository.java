@@ -31,11 +31,11 @@ public class SymbolRepository {
 //		+ "SELECT SYMBOL FROM watch_symbol) T "
 //		+ "GROUP BY symbol", nativeQuery=true);
 	    
-		Query sql3 = entityManager.createNativeQuery("SELECT SYMBOL FROM ("
-				+ "SELECT symbol FROM watch_symbol "
-				+ "UNION ALL "
-				+ "SELECT symbol FROM scenario_details) "
-				+ "T GROUP BY symbol");
+		Query sql3 = entityManager.createNativeQuery("select symbol from ("
+				+ "select symbol from watch_symbol "
+				+ "union all "
+				+ "select symbol from scenario_details) "
+				+ "t group by symbol");
 		
 	    return sql3.getResultList();
 	}

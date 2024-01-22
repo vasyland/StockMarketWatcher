@@ -9,13 +9,13 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "WATCH_SYMBOL", uniqueConstraints = {@UniqueConstraint(columnNames = "SYMBOL")})
+@Table(name = "watch_symbol", uniqueConstraints = {@UniqueConstraint(columnNames = "symbol")})
 public class WatchSymbol {
 
   // private static final long serialVersionUID = -2952735933715107255L;
 
   @Id
-  @Column(name = "SYMBOL", unique = true, nullable = false, length = 10)
+  @Column(name = "symbol", unique = true, nullable = false, length = 10)
   private String symbol;
   @Column(name = "quoterly_dividend_amount")
   private BigDecimal quoterlyDividendAmount;
@@ -23,7 +23,7 @@ public class WatchSymbol {
   private BigDecimal upperYield;
   @Column(name = "lower_yield")
   private BigDecimal lowerYield;
-  @Column(name = "UPDATED_ON")
+  @Column(name = "updated_on")
   private LocalDateTime updatedOn;
 
   public WatchSymbol() {

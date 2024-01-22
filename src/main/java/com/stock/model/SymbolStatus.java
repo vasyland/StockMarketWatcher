@@ -16,33 +16,30 @@ public class SymbolStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="SYMBOL", nullable=false, updatable=true)
+	@Column(name="symbol", nullable=false, updatable=true)
 	private String symbol;
-	@Column(name="CURRENT_PRICE")
+	@Column(name="current_price")
 	private BigDecimal currentPrice;
 	@Column(name = "quoterly_dividend_amount")
 	private BigDecimal quoterlyDividendAmount;
-	@Column(name="CURRENT_YIELD")
+	@Column(name="current_yield")
 	private BigDecimal currentYield;
-	@Column(name="UPPER_YIELD")
+	@Column(name="upper_yield")
 	private BigDecimal upperYield;
-	@Column(name="LOWER_YIELD")
+	@Column(name="lower_yield")
 	private BigDecimal lowerYield;
 	
-	@Column(name="ALLOWED_BUY_PRICE")
+	@Column(name="allowed_buy_price")
 	private BigDecimal allowedBuyPrice;
-	@Column(name="BEST_BUY_PRICE")
+	@Column(name="best_buy_price")
 	private BigDecimal bestBuyPrice;
-	
-	@Column(name="ALLOWED_BUY_YIELD")
+	@Column(name="allowed_buy_yield")
 	private BigDecimal allowedBuyYield;
 	@Column(name="SELL_POINT_YIELD")
 	private BigDecimal sellPointYield;
-	
-	
-	@Column(name="RECOMMENDED_ACTION")
+	@Column(name="recommended_action")
 	private String recommendedAction;
-	@Column(name = "UPDATED_ON")
+	@Column(name = "updated_on")
 	private LocalDateTime updatedOn;
 	
 	public SymbolStatus() {
