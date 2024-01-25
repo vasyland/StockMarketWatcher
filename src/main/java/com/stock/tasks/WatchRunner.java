@@ -81,15 +81,28 @@ public class WatchRunner {
 						log.error("Future failed to complete.");
 						continue;
 					}
+					System.out.println("========  #1 ===============");
 					
 					SymbolCurrentState p = future.get();
-					
 					if( p == null || p.getPrice() == null) {
 						log.error("Failed to get data from Yahoo.");
 						continue;
 					}
-										
-					BigDecimal outstandingShares = p.getMarketCap().divide(p.getPrice(), MathContext.DECIMAL32);
+					
+					System.out.println("========  #2 ===============");
+					
+					if(p.getPrice() == null || p.getPrice().equals(BigDecimal.valueOf(0.0))) {
+						System.out.println("PRICE IS NULL OR ZERO");
+					}
+					
+					System.out.println("========  #3 ===============" + p.getPrice());
+					BigDecimal outstandingShares;
+					try {
+						outstandingShares = p.getMarketCap().divide(p.getPrice(), MathContext.DECIMAL32);
+					} catch(Exception e) {
+						log.error("#2 ERROR ZERRO: - " + e.getMessage());
+						continue;
+					}
 					
 					scs.add(p);
 					
