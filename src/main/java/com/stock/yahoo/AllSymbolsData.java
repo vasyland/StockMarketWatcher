@@ -1,7 +1,7 @@
 package com.stock.yahoo;
 
 import java.io.InputStream;
-
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,23 +67,16 @@ public class AllSymbolsData {
 	
 	
 	private SymbolCurrentState getSymbolData(String symbol) {
-		YahooCurrentData dude = new YahooCurrentData();
-		SymbolCurrentState r = null;
-		
-		try {
-			InputStream yahooDataPage = dude.getYahooDataPage(symbol);
-			try {
-				r = dude.getSymbolData(yahooDataPage, symbol);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			//System.out.println("Price: " + r.getPrice() +  " Prev. Close: " + r.getPreviousClose() + " Percent changed: " + r.getChangedPercent());
-			yahooDataPage.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-		return r;	
+		YahooHistoryPrice yhp = new YahooHistoryPrice();
+	    
+	    SymbolCurrentState r = new SymbolCurrentState();
+
+	    /* Getting last price from yahoo history */
+	    BigDecimal lastPrice = yhp.getCurrentPrice(yhp, symbol);
+	    r.setSymbol(symbol);
+	    r.setPrice(lastPrice);
+	    
+	    return r;
 	}
 }
 

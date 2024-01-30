@@ -93,24 +93,13 @@ public class WatchRunner {
 						continue;
 					}
 					
-					BigDecimal outstandingShares;
-					try {
-						outstandingShares = p.getMarketCap().divide(p.getPrice(), MathContext.DECIMAL32);
-					} catch(Exception e) {
-						log.error("#2 ERROR ZERRO: - " + e.getMessage());
-						continue;
-					}
-					
 					scs.add(p);
 					
 					date = new Date();
-					String line = String.format("%-19S, %-8S,%6.2f,%5.2f,%6.2f,%8.6f%n",  
+					String line = String.format("%-19S, %-8S,%6.2f,%n",  
 							dateFormat.format(new Date()), 
 							p.getSymbol().trim(), 
-							p.getPrice(),
-							p.getChangedPercent(), 
-							p.getMarketCap(), 
-							outstandingShares);
+							p.getPrice());
 					
 					pw.print(line);
 				}
