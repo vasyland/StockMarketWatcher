@@ -1,7 +1,11 @@
-# StockMarketWatcher -b dscv2
+## StockMarketWatcher
+```
 Getting current prices from the yahoo finance on a schedule basis
+https://finance.yahoo.com/quote/TD.TO/history?p=TD.TO
+```
 
-# Database
+## Database
+```
 MySql 8.0.28 (MySql Community Server - GPL)
 
 mysql> describe symbol_status;
@@ -34,14 +38,25 @@ mysql> describe watch_symbol;
 | updated_on               | datetime(6)   | YES  |     | NULL    |       |
 +--------------------------+---------------+------+-----+---------+-------+
 5 rows in set (0.01 sec)
-
-# Install Kotlin pluging for eclipse
+```
+## Install Kotlin pluging for eclipse
 https://in-kotlin.com/ide/eclipse/
 
-
-# Build a deployment package from Eclipse
+## Install Gradle
+```
+Gradle 8.4
+```
+## Build a deployment package from Eclipse
 ```
 1. run Gradle Tasks -> StackMarketWatcher -> BootJar
 2. Take a ready to go package here: C:\tmp\StockMarketWatcher\build\libs\StockMarketWatcher-0.0.1.jar
 ```
+## Current Version
+```
+version = "2.0.0"
+```
 
+## Usefull Links
+```
+# http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html
+```
