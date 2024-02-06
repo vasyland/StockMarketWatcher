@@ -1,4 +1,4 @@
-# StockMarketWatcher
+# StockMarketWatcher -b dscv2
 Getting current prices from the yahoo finance on a schedule basis
 
 # Database
