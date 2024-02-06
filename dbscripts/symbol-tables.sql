@@ -1,19 +1,19 @@
 -- -----------------------------------------------------
--- Table `horse2`.`watch_symbol`
+-- Table `watch_symbol`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `horse2`.`watch_symbol` (
+CREATE TABLE `watch_symbol` (
   `symbol` VARCHAR(10) NOT NULL COMMENT 'Stock symbol TSX with .TO',
-  `quoterly_dividend_amount` DECIMAL(10,4) NULL COMMENT 'Majority of comapnies pay dividends on a quaterly basis',
+  `quoterly_dividend_amount` DECIMAL(10,4) NULL COMMENT 'Majority ov comapnies pay on quaterly basis',
   `upper_yield` DECIMAL(6,4) NULL COMMENT 'Upper yeild where price is at lowest point',
-  `lower_yield` DECIMAL(6,4) NULL COMMENT 'Lower yield when price is at highest point',
-  `updated_on` DATETIME(6) NULL COMMENT 'Date when record was created or updated',
+  `lower_yield` DECIMAL(6,4) NULL COMMENT 'Lowe yield when price is at highest point',
+  `updated_on` DATETIME ON UPDATE CURRENT_TIMESTAMP COMMENT 'Date when record was created or updated',
   PRIMARY KEY (`symbol`))
-ENGINE = InnoDB;
+ENGINE = InnoDB
 
 -- -----------------------------------------------------
--- Table `horse2`.`symbol_status`
+-- Table `symbol_status`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `horse2`.`symbol_status` (
+CREATE TABLE IF NOT EXISTS `symbol_status` (
   `symbol` VARCHAR(10) NOT NULL COMMENT 'Stock ticker. TSX with .TO',
   `current_price` DECIMAL(10,4) NULL COMMENT 'Cuurent price taken from yahoo finance',
   `quoterly_dividend_amount` DECIMAL(10,4) NULL COMMENT 'Majority of comapnies pay dividends on a quaterly basis',
@@ -25,6 +25,6 @@ CREATE TABLE IF NOT EXISTS `horse2`.`symbol_status` (
   `allowed_buy_price` DECIMAL(6,4) NULL DEFAULT NULL COMMENT 'Price just below top yiled price. ',
   `best_buy_price` DECIMAL(6,4) NULL DEFAULT NULL COMMENT 'Best price to buy. It is at the top of the yield',
   `recommended_action` VARCHAR(15) NULL COMMENT 'Possible Values: BUY, SELL, HOLD',
-  `updated_on` DATETIME(6) NULL,
+  `updated_on` DATETIME ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`symbol`))
 ENGINE = InnoDB;
