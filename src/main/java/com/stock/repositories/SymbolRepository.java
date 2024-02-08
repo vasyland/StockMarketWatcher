@@ -34,7 +34,7 @@ public class SymbolRepository {
 		Query sql3 = entityManager.createNativeQuery("select symbol from ("
 				+ "select symbol from watch_symbol "
 				+ "union all "
-				+ "select symbol from scenario_details) "
+				+ "select symbol from action) "
 				+ "t group by symbol");
 		
 	    return sql3.getResultList();
